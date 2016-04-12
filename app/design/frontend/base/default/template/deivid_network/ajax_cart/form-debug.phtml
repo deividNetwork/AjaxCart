@@ -1,0 +1,24 @@
+<?php
+    $product_option = Mage::helper('ajaxcart')->init(2);
+    $sizeOption = $product_option->getOptionByName('tamanho');
+?>
+<form action="<?php echo $this->getUrlAjaxCart() ?>" method="post">
+    <fieldset>
+        <input type="hidden" name="product" value="<?php echo $product_option->getProduct()->getId() ?>">
+    </fieldset>
+    <?php if ($sizeOption): ?>
+        <fieldset>
+            <label><?php echo $sizeOption->getTitle() ?></label>
+            <?php foreach($sizeOption->getValues() as $item): ?>
+                <input type="checkbox" name="options[<?php echo $sizeOption->getId() ?>][<?php echo $item->getId() ?>]" value="<?php echo $item->getId() ?>">
+                <span><?php echo $item->getTitle() ?></span>
+            <?php endforeach; ?>
+        </fieldset>
+    <?php endif; ?>
+    <fieldset>
+        <label for="qtd-ajax-cart">Quantidade</label>
+        <input type="number" name="qty" min="0" max="10">
+    </fieldset>
+
+    <button type="submit">Enviar</button>
+</form>
